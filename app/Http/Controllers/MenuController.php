@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
     public function index()
     {
-        $menus = Menu::with('kategori')->get();
-        $kategoris = Kategori::all();
-        return view('menu', compact('menus', 'kategoris'));
+        if (Auth::user()->role->name !== 'Administrator') {
+            return view('/error');
+        }
+
+        $menu = Menu::with('kategori')->get();
+        $kategori = Kategori::all();
+        return view('menu', compact('menu', 'kategori'));
     }
 
     public function store(Request $request)
@@ -21,7 +26,7 @@ class MenuController extends Controller
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori_id' => 'required|exists:kategoris,id',
+            'kategori_id' => 'required|exists:kategori,id',
         ]);
 
         $newName = '';
@@ -48,7 +53,7 @@ class MenuController extends Controller
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori_id' => 'required|exists:kategoris,id',
+            'kategori_id' => 'required|exists:kategori,id',
         ]);
 
         if ($request->hasFile('gambar')) {

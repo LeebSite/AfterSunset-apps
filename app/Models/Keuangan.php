@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Keuangan extends Model {
     use HasFactory;
 
+    protected $table = 'keuangan';
+
     protected $fillable = ['tanggal', 'jumlah_transaksi', 'penghasilan'];
 
-    public function detailPesanans() {
+    public function detailPesanan() {
         return $this->hasMany(Pesanan::class, 'tanggal', 'tanggal');
     }
 }

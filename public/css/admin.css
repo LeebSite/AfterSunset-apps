@@ -99,17 +99,28 @@ nav li{
     background-color: #dcdcdc;
 }
 .sidebar-dark-primary {
-    background-color: #062c7f; /* Sidebar Color */
+    background-color: #062c7f; 
 }
 .content-wrapper {
     background-color: #f9f9ff;
-    max-width: 100%;   /* Batasi lebar sesuai viewport */
-    padding: 10px;      /* Tambahkan padding agar rapi */
-    margin: 0 auto;     /* Tengah di layar besar */
-    overflow-x: hidden; /* Hilangkan scroll horizontal */
+    max-width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+    overflow-x: hidden; 
 }
 
-/* Tampilan tabel yang lebih kecil, dengan gaya elegan */
+.card {
+    max-height: calc(100vh - 150px); /* Sesuaikan agar tidak memenuhi seluruh layar */
+    overflow-y: auto; /* Aktifkan scroll untuk konten yang melampaui tinggi */
+}
+
+.table th,
+.table td {
+    white-space: nowrap; /* Agar kolom tabel tidak terlalu tinggi */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .table {
     font-size: 12px; /* Ukuran font lebih kecil */
     width: 100%;
@@ -119,11 +130,13 @@ nav li{
     border-radius: 8px; /* Border radius untuk tampilan lebih lembut */
     overflow: hidden; /* Menghindari elemen yang meluap */
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
+    word-wrap: break-word;
 }
 
 .table th {
-    padding: 8px 10px; /* Lebih kecil */
-    background-color: #f8f9fa; /* Warna header lebih lembut */
+    padding: 8px 10px;
+    background-color: #f8f9fa;
     color: #333;
     font-weight: bold;
     text-align: center;
@@ -131,11 +144,11 @@ nav li{
 }
 
 .table td {
-    padding: 6px 8px; /* Lebih kecil */
+    padding: 6px 8px; 
     text-align: left;
     border-bottom: 1px solid #ddd; /* Border antar sel */
     color: #555;
-    white-space: nowrap; /* Cegah teks meluap */
+    white-space: nowrap; 
 }
 
 /* Warna alternatif untuk baris */
@@ -166,6 +179,17 @@ nav li{
     border-bottom-right-radius: 8px;
 }
 
+/* Modal styling untuk layar besar */
+.modal-dialog {
+    max-width: 600px; /* Ukuran maksimum modal */
+    margin: 1.75rem auto; /* Margin default */
+}
+
+.btn-tambah-akun {
+    padding: 10px 20px;
+    font-size: 9px;
+}
+
 /* Tampilan header pencarian */
 .d-flex {
     font-size: 14px; /* Ukuran font lebih kecil */
@@ -175,6 +199,9 @@ nav li{
 /* Input pencarian yang lebih ramping */
 .input-group {
     width: 250px; /* Ukuran lebih kecil */
+}
+.icon-cari, .button-cari{
+    font-size: 12px;
 }
 
 .input-group-text, .form-control {
@@ -206,18 +233,6 @@ nav li{
     cursor: pointer;
 }
 
-@media (min-width: 768px) {
-    .menu-col {
-        width: 25%; /* 4 kolom di desktop */
-    }
-}
-
-@media (max-width: 767px) {
-    .menu-col {
-        width: 33.33%; /* 3 kolom di mobile */
-    }
-}
-
 
 @media (max-width: 768px) {
     .sidebar {
@@ -236,9 +251,27 @@ nav li{
         justify-content: space-around; /* Elemen dibagi rata */
     }
 
-    .table th, .table td {
-        font-size: 10px; /* Ukuran lebih kecil di layar kecil */
-        padding: 4px 6px;
+    .menu-col {
+        width: 25%;
+    }
+
+    /* Kolom No. lebih kecil untuk layar kecil */
+    .table th:first-child, 
+    .table td:first-child {
+        width: 30px; /* Lebih kecil di layar kecil */
+    }
+
+    /* Kolom aksi juga lebih kecil di layar kecil */
+    .table th:last-child,
+    .table td:last-child {
+        width: 100px;
+    }
+
+    /* Buat tabel dapat di-scroll pada layar kecil */
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     .input-group {
@@ -263,5 +296,20 @@ nav li{
     h1 {
         font-size: 24px; /* Sesuaikan ukuran judul */
     }
-   
+
+    .modal-content {
+        padding: 10px;
+        font-size: 13px;
+    }
+    .modal-dialog {
+        max-width: 80%; 
+        max-height: fit-content;
+        margin: 1rem auto; /* Sesuaikan margin */
+    }
+
+    .btn-tambah-akun {
+        font-size: 0.6rem;
+        padding: 6px 12px;
+    }
+
 }

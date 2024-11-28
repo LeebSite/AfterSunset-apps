@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
 
     public function up() {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->decimal('harga', 10, 2);
@@ -18,6 +18,6 @@ return new class extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('menu');
     }
 };

@@ -31,11 +31,11 @@
                 <!-- User Profile -->
                 <li class="nav-item d-flex align-items-center">
                     <img src="{{ asset('images/profilph.png') }}" class="img-circle mr-2" alt="User Image" style="width: 25px; height: 25px;">
-                    <span class="text-dark font-weight-bold mr-4">Admin</span>
+                    <span class="text-dark font-weight-bold mr-4">{{ Auth::user()->name }}</span>
                     <a href="#" class="btn btn-outline-danger btn-sm mr-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>                    
-                </li>
+                </li>                
             </ul>
         </nav>
 
@@ -58,17 +58,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('pemesanan.index') }}" class="nav-link {{ Request::routeIs('pemesanan.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-shopping-cart"></i>
-                                <p class="text-white">Pemesanan</p>                            
-                            </a>                            
-                        </li>                                              
-                        <li class="nav-item">
                             <a href="{{ route('riwayat.index') }}" class="nav-link {{ Request::routeIs('riwayat.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-history"></i>
                                 <p class="text-white">Riwayat</p>
                             </a>                            
                         </li>
+                        @if(Auth::user()->role->name === 'Kasir')
+                        <li class="nav-item">
+                            <a href="{{ route('pemesanan.index') }}" class="nav-link {{ Request::routeIs('pemesanan.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <p class="text-white">Pemesanan</p>                            
+                            </a>                            
+                        </li>
+                        @elseif(Auth::user()->role->name === 'Administrator')
                         <li class="nav-item">
                             <a href="{{ route('keuangan.index') }}" class="nav-link {{ Request::routeIs('keuangan.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-wallet"></i>
@@ -87,6 +89,7 @@
                                 <p class="text-white">Akun Kasir</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </nav>
             </div>
@@ -130,7 +133,7 @@
         </div>
         @endif
 
-        <!-- Modal Konfirmasi Logout -->
+        <!-- Modal Logout -->
         <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -143,19 +146,16 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ route('logout') }}" class="btn btn-danger">Ya, Keluar</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-                Leeb
-            </div>
-            <strong>&copy; 2024 <a href="#">Rplbo</a>.</strong> All rights reserved.
-        </footer>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

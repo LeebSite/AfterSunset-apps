@@ -15,6 +15,7 @@ class AuthController extends Controller
         return view('login');
     }
 
+
     public function autentic(Request $request)
     {
         // Validasi input

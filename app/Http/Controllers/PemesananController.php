@@ -7,14 +7,19 @@ use App\Models\DetailPesanan;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
     // Menampilkan form pemesanan
     public function index()
     {
-        $menus = Menu::all();
-        return view('pemesanan', compact('menus'));
+        if (Auth::user()->role->name !== 'Kasir') {
+            return view('/error');
+        }
+
+        $menu = Menu::all();
+        return view('pemesanan', compact('menu'));
     }
     
     // Menyimpan transaksi pemesanan
@@ -30,10 +35,10 @@ class PemesananController extends Controller
             ]);
     
             // Menguraikan data menus dari JSON
-            $menus = json_decode($request->menus, true);
+            $menu = json_decode($request->menu, true);
     
             // Menambahkan detail pesanan (produk dan jumlahnya)
-            foreach ($menus as $menu) {
+            foreach ($menu as $menu) {
                 $menuItem = Menu::find($menu['id']);
                 if ($menuItem) {
                     DetailPesanan::create([

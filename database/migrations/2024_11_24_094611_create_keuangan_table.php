@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up() {
-        Schema::create('keuangans', function (Blueprint $table) {
+        Schema::create('keuangan', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
             $table->integer('jumlah_transaksi');
@@ -18,6 +18,6 @@ return new class extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists('keuangans');
+        Schema::dropIfExists('keuangan');
     }
 };

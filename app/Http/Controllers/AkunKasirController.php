@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AkunKasirController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->role->name !== 'Administrator') {
+            return view('/error');
+        }
+
         $kasirs = User::whereHas('role', function ($query) {
             $query->where('name', 'kasir');
         })->get();
@@ -17,29 +22,31 @@ class AkunKasirController extends Controller
         return view('akunkasir', compact('kasirs'));
     }
 
-    // KasirController.php
     public function store(Request $request)
     {
+        // Validasi khusus untuk username
         $request->validate([
             'name' => 'required',
-            'username' => 'required|unique:users,username',
+            'username' => 'required|unique:user,username',
             'password' => 'required|min:6',
             'phone' => 'required',
             'address' => 'required',
         ]);
-
+    
+        // Jika validasi berhasil, tambahkan akun
         $role = Role::where('name', 'kasir')->first();
         User::create([
             'name' => $request->name,
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'phone' => $request->phone,
             'address' => $request->address,
             'role_id' => $role->id,
         ]);
-
+    
         return redirect()->route('akunkasir.index')->with('success', 'Akun kasir berhasil ditambahkan');
     }
+    
 
     public function update(Request $request, $id)
     {

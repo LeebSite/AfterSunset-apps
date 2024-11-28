@@ -64,11 +64,7 @@
                                 <i class="bi bi-eye-slash password-toggle" id="togglePassword"></i>
                             </div>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <button type="submit" class="btn btn-primary w-100 mt-4">Login</button>
                     </form>
                 </div>
             </div>

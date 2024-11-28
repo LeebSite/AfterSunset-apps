@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Daftar Menu</h1>
+<div class="container py-2">
+    <h1 class="mb-4 font-weight-bold">Daftar Menu</h1>
 
     <!-- Tombol Tambah Menu -->
     <button type="button" class="btn btn-success mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#addMenuModal">
-        Tambah Menu
+        <i class="bi bi-plus-circle me-2"></i> Tambah Menu
     </button>
 
     <!-- Tabel Menu -->
@@ -21,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($menus as $index => $menu)
+            @foreach($menu as $index => $menu)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td><img src="{{ asset($menu->gambar) }}" alt="{{ $menu->nama }}" style="height: 100px; object-fit: cover;"></td>
@@ -56,22 +57,25 @@
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama Menu</label>
-                                        <input type="text" class="form-control" name="nama" required>
+                                        <input type="text" class="form-control" name="nama" required placeholder="Masukkan Nama Menu" oninvalid="this.setCustomValidity('Harap diisi !')" oninput="this.setCustomValidity('')">
                                     </div>
                                     <div class="mb-3">
                                         <label for="harga" class="form-label">Harga</label>
-                                        <input type="number" class="form-control" name="harga" required>
+                                        <input type="number" class="form-control" name="harga" required placeholder="Masukkan Harga" oninvalid="this.setCustomValidity('Harap diisi !')" oninput="this.setCustomValidity('')">
                                     </div>
                                     <div class="mb-3">
                                         <label for="gambar" class="form-label">Gambar</label>
-                                        <input type="file" class="form-control" name="gambar" required>
+                                        <input type="file" class="form-control" name="gambar" required oninvalid="this.setCustomValidity('Harap diisi !')" oninput="this.setCustomValidity('')">
                                     </div>
                                     <div class="mb-3">
                                         <label for="kategori_id" class="form-label">Kategori</label>
                                         <select name="kategori_id" class="form-control" required>
                                             <option value="">Pilih Kategori</option>
-                                            @foreach($kategoris as $kategori)
-                                                <option value="{{ $kategori ->id }}">{{ $kategori->nama }}</option>
+                                            @foreach($kategori as $kat)
+                                                <option value="{{ $kat->id }}" 
+                                                    {{ $menu->kategori_id == $kat->id ? 'selected' : '' }}>
+                                                    {{ $kat->nama }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -99,26 +103,26 @@
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama Menu</label>
-                                        <input type="text" class="form-control" name="nama" value="{{ $menu->nama }}" required>
+                                        <input type="text" class="form-control" name="nama" value="{{ $menu->nama }}" required placeholder="Masukkan Nama Menu" oninvalid="this.setCustomValidity('Harap diisi !')" oninput="this.setCustomValidity('')">
                                     </div>
                                     <div class="mb-3">
                                         <label for="harga" class="form-label">Harga</label>
-                                        <input type="number" class="form-control" name="harga" value="{{ $menu->harga }}" required>
+                                        <input type="number" class="form-control" name="harga" value="{{ $menu->harga }}" required placeholder="Masukkan Harga" oninvalid="this.setCustomValidity('Harap diisi !')" oninput="this.setCustomValidity('')">
                                     </div>
                                     <div class="mb-3">
                                         <label for="gambar" class="form-label">Gambar</label>
-                                        <input type="file" class="form-control" name="gambar">
-                                        <small>* Kosongkan jika tidak ingin mengganti gambar</small>
+                                        <input type="file" class="form-control" name="gambar" >
+                                        <small class="text-muted font-weight-light">*Kosongkan jika tidak ingin mengganti gambar</small>
                                     </div>
                                     <div class="mb-3">
                                         <label for="kategori_id" class="form-label">Kategori</label>
-                                        <select name="kategori_id" class="form-control" required>
-                                            @foreach($kategoris as $kategori)
-                                                <option value="{{ $kategori->id }}" 
-                                                    {{ $menu->kategori_id == $kategori->id ? 'selected' : '' }}>
-                                                    {{ $kategori->nama }}
-                                                </option>
-                                            @endforeach
+                                        <select name="kategori_id" class="form-control" required oninvalid="this.setCustomValidity('Harap diisi !')" oninput="this.setCustomValidity('')">>
+                                            @foreach($kategori as $item)
+                                            <option value="{{ $item->id }}" 
+                                                {{ $menu->kategori_id == $item->id ? 'selected' : '' }}>
+                                                {{ $item->nama }}
+                                            </option>
+                                            @endforeach                                        
                                         </select>
                                     </div>
                                 </div>
@@ -127,6 +131,29 @@
                                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Hapus Menu -->
+                <div class="modal fade" id="deleteMenuModal-{{ $menu->id }}" tabindex="-1" aria-labelledby="deleteMenuModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteMenuModalLabel">Konfirmasi Hapus Menu</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Apakah Anda yakin ingin menghapus menu <strong>{{ $menu->nama }}</strong>?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <form action="{{ route('menu.destroy', $menu->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,6 +178,7 @@
         </div>
     </div>
     @endif
+</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

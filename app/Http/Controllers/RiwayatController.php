@@ -9,24 +9,23 @@ class RiwayatController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil 10 transaksi terakhir
         $pesanans = Pesanan::with('detailPesanan.menu')
-            ->latest() // Urutkan berdasarkan waktu terbaru
-            ->paginate(10); // Menampilkan 10 transaksi per halaman
+            ->latest()
+            ->paginate(10);
 
         return view('riwayat', compact('pesanans'));
     }
+
     public function search(Request $request)
     {
-    $query = $request->input('query');
+        $query = $request->input('query');
 
-    $pesanans = Pesanan::with('detailPesanan.menu')
-        ->where('nama_pemesanan', 'like', '%' . $query . '%')
-        ->latest()
-        ->take(10) // Batasi ke 10 hasil
-        ->get();
+        $pesanans = Pesanan::with('detailPesanan.menu')
+            ->where('nama_pemesanan', 'like', '%' . $query . '%')
+            ->latest()
+            ->take(10)
+            ->get();
 
-    return response()->json($pesanans);
+        return response()->json($pesanans);
     }
-
 }
