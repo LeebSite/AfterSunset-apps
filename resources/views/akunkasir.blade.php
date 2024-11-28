@@ -140,7 +140,7 @@
                             
                             @error('username')
                                 <div class="invalid-feedback">
-                                    Username Sudah Digunakan
+                                    Username Sudah Digunakan !
                                 </div>
                             @enderror
                         </div>                        
