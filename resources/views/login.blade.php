@@ -9,19 +9,56 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f7f2;
+            background: linear-gradient(55deg, #002366, #0214b7); /* Gradient background */
             font-family: 'Poppins', sans-serif;
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        h2 {
+            font-size: 30px
+        }
+        .background-logo {
+            position: absolute;
+            bottom: -200px; /* Adjust to position correctly */
+            left: -190px; /* Adjust to position correctly */
+            width: 900px; /* Adjust size as needed */
+            opacity: 0.2; /* Half transparent */
+            transform: rotate(30deg); /* Diagonal position */
+            z-index: 1;
         }
         .login-container {
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.6); /* Slight transparency */
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2; /* Ensure container is above the background logo */
         }
         .login-logo {
-            max-width: 120px; /* Sesuaikan ukuran logo di sini */
-            margin-bottom: 20px;
+            max-width: 100px;
+            margin-bottom: 1rem;
+        }
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            padding: 0.75rem;
+        }
+        .btn-primary {
+            background-color: #004aad;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem;
+        }
+        .btn-primary:hover {
+            background-color: #00308f;
         }
         .password-container {
             position: relative;
@@ -29,49 +66,39 @@
         .password-toggle {
             position: absolute;
             top: 50%;
-            right: 10px;
+            right: 15px;
             transform: translateY(-50%);
             cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="container h-100">
-        <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-md-5">
-                <div class="login-container">
-                    <div class="text-center mb-4">
-                        <img src="{{ asset('images/logo-aftersunset.png') }}" alt="after sunset Logo" class="login-logo">
-                        <h2 class="mb-3">Selamat Datang di Sistem Kasir AfterSunset</h2>
-                    </div>
-                    
-                    <!-- Displaying error messages if login fails -->
-                    @if (Session::has('status'))
-                        <div class="alert alert-danger">{{ Session::get('message') }}</div>
-                    @endif
+    <!-- Background Logo -->
+    <img src="{{ asset('images/logo-aftersunset.png') }}" alt="Background Logo" class="background-logo">
 
-                    <!-- Form action updated to route to your authentication method -->
-                    <form action="{{ route('login') }}" method="post">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <div class="password-container">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-                                <i class="bi bi-eye-slash password-toggle" id="togglePassword"></i>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-4">Login</button>
-                    </form>
-                </div>
+    <div class="login-container">
+        <img src="{{ asset('images/logo-aftersunset.png') }}" alt="After Sunset Logo" class="login-logo">
+        <h2 class="mb-4">Selamat Datang di <br> Sistem Kasir AfterSunset</h2>
+
+        <!-- Error message -->
+        @if (Session::has('status'))
+            <div class="alert alert-danger">{{ Session::get('message') }}</div>
+        @endif
+
+        <!-- Login form -->
+        <form action="{{ route('login') }}" method="post">
+            @csrf
+            <div class="mb-4">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
             </div>
-        </div>
+            <div class="mb-5 password-container">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                <i class="bi bi-eye-slash password-toggle" id="togglePassword"></i>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
