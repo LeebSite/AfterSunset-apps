@@ -10,7 +10,6 @@ use PDF as PDF;
 
 class KeuanganController extends Controller {
 
-
     public function index() {
 
         if (Auth::user()->role->name !== 'Administrator') {
@@ -70,6 +69,7 @@ class KeuanganController extends Controller {
             'bulanOptions' => $bulanOptions
         ]);
     }    
+    
 
     public function downloadPdf(Request $request)
     {
