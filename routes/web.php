@@ -42,4 +42,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
 });
 
-// Keuangan Routes
+Route::fallback(function () {
+    abort(404); // Menampilkan halaman error 404
+});

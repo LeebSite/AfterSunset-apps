@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -24,16 +21,6 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Mendapatkan sesi login_attempts dan blocked_until
-        $attempts = session()->get('login_attempts', 0);
-        $blockedUntil = session()->get('blocked_until', now());
-
-        // Cek apakah akun diblokir sementara
-        if ($attempts >= 3 && now()->lessThan($blockedUntil)) {
-            return redirect('/login')->with('status', 'failed')
-                ->with('message', 'Akun diblokir sementara. Coba lagi setelah ' . $blockedUntil->diffForHumans());
-        }
-
         // Cek kredensial dengan Auth::attempt (menggunakan bcrypt)
         if (Auth::attempt($credentials)) {
             // Reset login_attempts dan blocked_until jika berhasil login
@@ -43,6 +30,16 @@ class AuthController extends Controller
             $role = Auth::user()->role->name;
 
             return redirect()->intended('/beranda');
+        }
+
+        // Mendapatkan sesi login_attempts dan blocked_until
+        $attempts = session()->get('login_attempts', 0);
+        $blockedUntil = session()->get('blocked_until', now());
+
+        // Cek apakah akun diblokir sementara
+        if ($attempts >= 3 && now()->lessThan($blockedUntil)) {
+            return redirect('/login')->with('status', 'failed')
+                ->with('message', 'Akun diblokir sementara. Coba lagi setelah ' . $blockedUntil->diffForHumans());
         }
 
         // Jika gagal, tambahkan login_attempts

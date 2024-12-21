@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>403 - Akses Ditolak</title>
+    <title>404 - Halaman Tidak Ditemukan</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
         }
         .error-icon {
             font-size: 8rem;
-            color: #dc3545;
+            color: #007bff;
             margin-bottom: 2rem;
         }
         .error-code {
@@ -61,12 +61,12 @@
             <div class="col-md-12">
                 <div class="error-template min-vh-100 d-flex flex-column justify-content-center">
                     <div class="error-icon">
-                        <i class="fas fa-lock"></i>
+                        <i class="fas fa-search"></i>
                     </div>
-                    <h1 class="error-code">403</h1>
-                    <h2 class="error-title">Akses Ditolak</h2>
+                    <h1 class="error-code">404</h1>
+                    <h2 class="error-title">Halaman Tidak Ditemukan</h2>
                     <div class="error-details">
-                        Maaf, Anda tidak memiliki akses ke halaman ini.
+                        Maaf, kami tidak dapat menemukan halaman yang Anda cari. Halaman mungkin telah dipindahkan atau dihapus.
                     </div>
                     <div class="error-actions">
                         <a href="/beranda" class="btn btn-primary btn-lg btn-back-home">
