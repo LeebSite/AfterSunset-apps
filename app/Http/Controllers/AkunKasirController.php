@@ -45,8 +45,7 @@ class AkunKasirController extends Controller
         ]);
     
         return redirect()->route('akunkasir.index')->with('success', 'Akun kasir berhasil ditambahkan');
-    }
-    
+    }    
 
     public function update(Request $request, $id)
     {

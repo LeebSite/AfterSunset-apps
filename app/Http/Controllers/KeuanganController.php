@@ -10,7 +10,6 @@ use PDF as PDF;
 
 class KeuanganController extends Controller {
 
-
     public function index() {
 
         if (Auth::user()->role->name !== 'Administrator') {
@@ -69,7 +68,7 @@ class KeuanganController extends Controller {
             'bulan' => $bulan,
             'bulanOptions' => $bulanOptions
         ]);
-    }    
+    }   
 
     public function downloadPdf(Request $request)
     {
@@ -94,8 +93,7 @@ class KeuanganController extends Controller {
 
         return $pdf->download("Laporan_Keuangan_{$tahun}_{$bulan}.pdf");
     }
-
-    
+ 
     public function getDetail($tanggal) {
         // Ambil detail transaksi dari Pesanan
         $detailPesanans = Pesanan::whereDate('created_at', $tanggal)->get();

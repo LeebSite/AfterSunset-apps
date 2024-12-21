@@ -20,7 +20,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/riwayat/search', [RiwayatController::class, 'search'])->name('riwayat.search');
 });
 
-
 // Routes untuk administrator
 Route::middleware(['auth'])->group(function () {
     Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
