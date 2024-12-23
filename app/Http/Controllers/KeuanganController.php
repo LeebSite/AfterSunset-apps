@@ -12,11 +12,6 @@ class KeuanganController extends Controller {
 
     public function index() {
 
-        if (Auth::user()->role->name !== 'Administrator') {
-            abort(403, 'Unauthorized access.');
-            return view('/error');
-        }
-
         // Ambil tahun dan bulan yang memiliki transaksi
         $tahunBulan = Pesanan::selectRaw('YEAR(created_at) as tahun, MONTH(created_at) as bulan')
             ->distinct()

@@ -11,9 +11,6 @@ class MenuController extends Controller
 {
     public function index()
     {
-        // if (Auth::user()->role->name !== 'Administrator') {
-        //     return view('/error');
-        // }
 
         $menu = Menu::with('kategori')->get();
         $kategori = Kategori::all();

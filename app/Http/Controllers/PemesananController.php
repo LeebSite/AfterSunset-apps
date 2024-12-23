@@ -14,9 +14,6 @@ class PemesananController extends Controller
     // Menampilkan form pemesanan
     public function index()
     {
-        if (Auth::user()->role->name !== 'Kasir') {
-            return view('/error');
-        }
 
         $menu = Menu::all();
         return view('pemesanan', compact('menu'));

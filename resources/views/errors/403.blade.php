@@ -66,7 +66,7 @@
                     <h1 class="error-code">403</h1>
                     <h2 class="error-title">Akses Ditolak</h2>
                     <div class="error-details">
-                        Maaf, Anda tidak memiliki akses ke halaman ini. Silakan hubungi administrator jika Anda yakin seharusnya memiliki akses.
+                        Maaf, Anda tidak memiliki akses ke menu ini.
                     </div>
                     <div class="error-actions">
                         <a href="/beranda" class="btn btn-primary btn-lg btn-back-home">

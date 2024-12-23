@@ -8,21 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $role
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next, $role)
     {
         if (Auth::check() && Auth::user()->role->name === $role) {
             return $next($request);
         }
 
-        // Jika tidak memiliki akses, tampilkan halaman 403
-        abort(403);
+        // Jika tidak memiliki akses, tampilkan halaman 403 dengan pesan khusus
+        return response()->view('errors.403', ['message' => 'Maaf, Anda tidak memiliki akses ke menu ini.'], 403);
     }
 }
