@@ -8,9 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
@@ -63,10 +61,10 @@
                     <div class="error-icon">
                         <i class="fas fa-lock"></i>
                     </div>
-                    <h1 class="error-code">403</h1>
+                    <h1 class="error-code"> 403</h1>
                     <h2 class="error-title">Akses Ditolak</h2>
                     <div class="error-details">
-                        Maaf, Anda tidak memiliki akses ke menu ini.
+                        {{ $message }}
                     </div>
                     <div class="error-actions">
                         <a href="/beranda" class="btn btn-primary btn-lg btn-back-home">
@@ -79,7 +77,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS (optional, if you need Bootstrap's JavaScript features) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

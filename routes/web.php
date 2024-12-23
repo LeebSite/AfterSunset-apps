@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AkunKasirController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\KeuanganController;
