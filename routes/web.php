@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\LogController;
 
 // Autentikasi Routes
 Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -17,11 +18,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/lockscreen', [LoginController::class, 'lockScreen'])->middleware('auth')->name('lockscreen');
 Route::post('/lockscreen/submit', [LoginController::class, 'unlockScreen'])->name('lockscreen.submit');
 
-//Route untuk jam kerja
+// Route untuk jam kerja
 Route::get('/jam-kerja', function () { return view('errors.jam-kerja'); })->name('jam-kerja');
 
-// Daftarkan middleware
-Route::middleware(['auth', 'autolock'])->group(function () {
+// Daftarkan middleware untuk aktivitas logging
+Route::middleware(['auth', 'autolock', 'log.activity'])->group(function () {
     Route::get('/beranda', function () { return view('beranda'); })->name('beranda');
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
     Route::get('/riwayat/search', [RiwayatController::class, 'search'])->name('riwayat.search');
@@ -41,4 +42,8 @@ Route::middleware(['auth', 'autolock'])->group(function () {
         Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
     });
 
+    // Route untuk menampilkan log aktivitas
+    Route::middleware(['role:Administrator'])->group(function () {
+        Route::get('/logs', [LogController::class, 'tampilLog'])->name('logs.tampil');
+    });
 });

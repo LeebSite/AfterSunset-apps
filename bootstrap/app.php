@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'role' => \App\Http\Middleware\RoleMiddleware::class,
                 'autolock' => \App\Http\Middleware\AutoLock::class,
                 'jamkerja' => \App\Http\Middleware\JamKerjaMiddleware::class,
-                // 'log.activity' => \App\Http\Middleware\LogActivity::class,
+                'log.activity' => \App\Http\Middleware\LogActivity::class,
 
         ]);
        

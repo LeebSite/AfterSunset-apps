@@ -89,6 +89,12 @@
                                 <p class="text-white">Akun Kasir</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('logs.tampil') }}" class="nav-link {{ Request::routeIs('logs.tampil') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-address-book"></i>
+                                <p class="text-white">Activity Logs</p>
+                            </a>
+                        </li>
                         @endif
                     </ul>
                 </nav>
