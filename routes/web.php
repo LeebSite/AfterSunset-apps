@@ -22,7 +22,6 @@ Route::post('/lockscreen/submit', [LoginController::class, 'unlockScreen'])->nam
 // Route untuk jam kerja
 Route::get('/jam-kerja', function () { return view('errors.jam-kerja'); })->name('jam-kerja');
 
-// Daftarkan middleware untuk aktivitas logging
 Route::middleware(['auth', 'autolock', 'log.activity'])->group(function () {
     Route::get('/beranda', function () { return view('beranda'); })->name('beranda');
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
@@ -31,8 +30,12 @@ Route::middleware(['auth', 'autolock', 'log.activity'])->group(function () {
     // Routes untuk administrator
     Route::middleware(['role:Administrator', 'autolock'])->group(function () {
         Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
+        Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
         Route::post('/keuangan/laporan', [KeuanganController::class, 'getLaporan'])->name('keuangan.laporan');
         Route::get('/keuangan/laporan', [KeuanganController::class, 'getLaporan'])->name('keuangan.laporan');
+        Route::post('/keuangan/detail/{tanggal}', [KeuanganController::class, 'getDetail'])->name('keuangan.detail');
+        Route::get('/keuangan/detail/{tanggal}', [KeuanganController::class, 'getDetail'])->name('keuangan.detail');
+        Route::get('/keuangan/download', [KeuanganController::class, 'downloadPdf'])->name('keuangan.download');
         Route::resource('menu', MenuController::class);
         Route::resource('akunkasir', AkunKasirController::class);
     });

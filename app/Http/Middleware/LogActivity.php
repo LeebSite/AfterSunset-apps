@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -32,6 +33,9 @@ class LogActivity
                     'user_role' => Auth::user()->role->name, // Mengakses nama role melalui relasi
                     'activity_description' => $description,
                 ]);
+
+                // Mencatat ke log.txt
+                $this->writeLogToFile($description, $request);
             }
         }
 
@@ -74,6 +78,26 @@ class LogActivity
             }
         }
 
-        return null; // Tidak mencatat aktivitas jika tidak ditemukan
+        return null; 
+    }
+
+    private function writeLogToFile($description, $request)
+    {
+        $userId = Auth::id();
+        $userName = Auth::user()->name;
+        $ipAddress = $request->ip();
+        $url = $request->fullUrl();
+        $time = now()->toDateTimeString();
+
+        $logEntry = ":User  $userId\n" .
+                    "User  Name: $userName\n" .
+                    "Time: $time\n" .
+                    "IP: $ipAddress\n" .
+                    "URL: $url\n" .
+                    "Activity: $description\n" .
+                    "==================================================\n";
+
+        // Menyimpan log ke file log.txt
+        file_put_contents(storage_path('logs/log.txt'), $logEntry, FILE_APPEND);
     }
 }

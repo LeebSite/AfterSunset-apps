@@ -14,7 +14,7 @@ class AutoLock
             return redirect()->route('lockscreen'); // Arahkan ke halaman lockscreen jika terkunci
         }
 
-        $timeout = 100; // 30 detik
+        $timeout = 100;
         $lastActivity = session('last_activity_time', time());
 
         if (time() - $lastActivity > $timeout) {
