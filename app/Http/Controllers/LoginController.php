@@ -17,7 +17,7 @@ class LoginController extends Controller
     public function autentic(Request $request)
     {
         $maxAttempts = 3; // Maximum attempts
-        $lockoutTime = 100000; // Lockout duration in seconds
+        $lockoutTime = 30; // Lockout duration in seconds
         $credentials = $request->validate([
             'username' => 'required|string',
             'password' => 'required',

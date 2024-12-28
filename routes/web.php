@@ -47,4 +47,5 @@ Route::middleware(['auth', 'autolock', 'log.activity'])->group(function () {
     Route::middleware(['role:Administrator'])->group(function () {
         Route::get('/logs', [LogController::class, 'tampilLog'])->name('logs.tampil');
     });
+    Route::get('/reset-lockout', [LoginController::class, 'resetLockout'])->name('reset.lockout');
 });

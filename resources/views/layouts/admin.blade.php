@@ -91,8 +91,8 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('logs.tampil') }}" class="nav-link {{ Request::routeIs('logs.tampil') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-address-book"></i>
-                                <p class="text-white">Activity Logs</p>
+                                <i class="nav-icon fas fa-solid fa-folder-open"></i>
+                                <p class="text-white">Log Aktivitas</p>
                             </a>
                         </li>
                         @endif
