@@ -13,6 +13,7 @@ use App\Http\Controllers\LogController;
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'autentic']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Route untuk lockscreen
 Route::get('/lockscreen', [LoginController::class, 'lockScreen'])->middleware('auth')->name('lockscreen');

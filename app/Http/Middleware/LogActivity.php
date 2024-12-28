@@ -10,32 +10,57 @@ class LogActivity
 {
     public function handle($request, Closure $next)
     {
+        $response = $next($request);
+
         if (Auth::check()) {
-            $path = $request->path();
-            $method = $request->route()->getActionMethod(); // Mendapatkan metode controller yang dipanggil
-            
-            // Mencatat aktivitas
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
-                'user_role' => Auth::user()->role,
-                'activity_description' => $this->mapRouteToDescription($path),
-            ]);
+            $method = $request->route()->getActionMethod(); // Metode controller yang dipanggil
+            $description = $this->mapActionToDescription($request);
+
+            if ($description) {
+                ActivityLog::create([
+                    'user_id' => Auth::id(),
+                    'user_name' => Auth::user()->name,
+                    'user_role' => Auth::user()->role,
+                    'activity_description' => $description,
+                ]);
+            }
         }
 
-        return $next($request);
+        return $response;
     }
 
-    private function mapRouteToDescription($path)
+    private function mapActionToDescription($request)
     {
-        // Pemetaan path ke deskripsi aktivitas
-        $menuDescriptions = [
-            'beranda' => 'akses beranda',
-            'pemesanan' => 'akses pemesanan',
-            'riwayat' => 'akses riwayat',
-            // Tambahkan pemetaan lainnya sesuai kebutuhan
+        $route = $request->route()->uri(); // Mendapatkan URI
+        $action = $request->route()->getActionMethod(); // Metode controller
+        $descriptions = [
+            'akunkasir' => [
+                'index' => 'Mengakses halaman Akun Kasir',
+                'store' => 'Menambah akun kasir',
+                'update' => 'Mengedit akun kasir',
+                'destroy' => 'Menghapus akun kasir',
+            ],
+            'menu' => [
+                'index' => 'Mengakses halaman Menu',
+                'store' => 'Menambah menu',
+                'update' => 'Mengedit menu',
+                'destroy' => 'Menghapus menu',
+            ],
+            'pemesanan' => [
+                'index' => 'Mengakses halaman Pemesanan',
+                'store' => 'Menambah transaksi pemesanan',
+            ],
+            'keuangan' => [
+                'index' => 'Mengakses halaman Keuangan',
+            ],
         ];
 
-        return $menuDescriptions[$path] ?? 'akses ' . $path;
+        foreach ($descriptions as $key => $actions) {
+            if (str_contains($route, $key) && isset($actions[$action])) {
+                return $actions[$action];
+            }
+        }
+
+        return null; // Tidak mencatat aktivitas jika tidak ditemukan
     }
 }

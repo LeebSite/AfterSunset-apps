@@ -2,41 +2,43 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4 text-4xl font-extrabold dark:text-white">Activity Logs</h1>
+    <h1 class="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">Activity Logs</h1>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 bg-white text-sm">
-            <thead>
+    <div class="overflow-x-auto bg-white shadow-md dark:bg-gray-800">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+            <thead class="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">No</th>
-                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
-                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Role</th>
-                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Activity Description</th>
-                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date & Time</th>
+                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-gray-200">No</th>
+                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-gray-200">Name</th>
+                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-gray-200">Role</th>
+                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-gray-200">Activity Description</th>
+                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-gray-200">Date & Time</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
                 @forelse ($logs as $log)
                 <tr>
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
+                    <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700 dark:text-gray-300">
                         {{ $loop->iteration + ($logs->currentPage() - 1) * $logs->perPage() }}
                     </td>
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
+                    <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700 dark:text-gray-300">
                         {{ $log->user_name }}
                     </td>
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
+                    <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700 dark:text-gray-300">
                         {{ $log->user_role }}
                     </td>
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
+                    <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700 dark:text-gray-300">
                         {{ $log->activity_description }}
                     </td>
-                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
+                    <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700 dark:text-gray-300">
                         {{ $log->created_at->format('Y-m-d H:i:s') }}
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="whitespace-nowrap px-4 py-2 text-center text-gray-700">No logs available</td>
+                    <td colspan="5" class="whitespace-nowrap px-4 py-2 text-center text-gray-700 dark:text-gray-300">
+                        No logs available
+                    </td>
                 </tr>
                 @endforelse
             </tbody>
