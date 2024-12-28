@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\ActivityLog;
+
 
 class LoginController extends Controller
 {
@@ -22,43 +24,58 @@ class LoginController extends Controller
             'username' => 'required|string',
             'password' => 'required',
         ]);
-
-        // Cek apakah akun diblokir sementara
+    
         if (Session::has('lockout_time') && time() < Session::get('lockout_time')) {
             $remainingTime = Session::get('lockout_time') - time();
             return redirect('/login')->with('status', 'failed')
                 ->with('message', 'Terlalu banyak percobaan login. Coba lagi setelah ' . $remainingTime . ' detik.');
         }
-
+    
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             Session::forget('login_attempts');
             Session::forget('lockout_time');
             Session::put('last_activity_time', time()); // Set waktu aktivitas terakhir
-
+    
+            // Mencatat aktivitas login
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'user_name' => Auth::user()->name,
+                'user_role' => Auth::user()->role->name,
+                'activity_description' => 'Login ke sistem',
+            ]);
+    
             return redirect()->intended('/beranda');
         }
-
+    
         // Jika gagal, tambahkan login_attempts
         $attempts = Session::get('login_attempts', 0) + 1;
         Session::put('login_attempts', $attempts);
-
+    
         if ($attempts >= $maxAttempts) {
             Session::put('lockout_time', time() + $lockoutTime);
             return redirect('/login')->with('status', 'failed')
                 ->with('message', 'Terlalu banyak percobaan login. Akun diblokir selama ' . $lockoutTime . ' detik.');
         }
-
+    
         return redirect('/login')->with('status', 'failed')->with('message', 'Username atau Password salah. Percobaan tersisa: ' . ($maxAttempts - $attempts));
     }
-
+    
     public function logout(Request $request)
     {
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'user_role' => Auth::user()->role->name,
+            'activity_description' => 'Logout dari sistem',
+        ]);
+    
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/login');
     }
+    
 
     public function lockScreen()
     {

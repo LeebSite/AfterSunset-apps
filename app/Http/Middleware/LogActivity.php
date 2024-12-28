@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -13,16 +12,26 @@ class LogActivity
         $response = $next($request);
 
         if (Auth::check()) {
-            $method = $request->route()->getActionMethod(); // Metode controller yang dipanggil
+            $method = $request->route()->getActionMethod(); // Mendapatkan metode controller yang dipanggil
             $description = $this->mapActionToDescription($request);
 
+            // Cek apakah ini aktivitas login atau logout
+            if ($method === 'autentic') {
+                $description = 'Login ke sistem'; // Menambahkan log aktivitas login
+            }
+
+            if ($method === 'logout') {
+                $description = 'Logout dari sistem'; // Menambahkan log aktivitas logout
+            }
+
+            // Mencatat aktivitas dalam log
             if ($description) {
                 ActivityLog::create([
                     'user_id' => Auth::id(),
                     'user_name' => Auth::user()->name,
                     'user_role' => Auth::user()->role->name, // Mengakses nama role melalui relasi
                     'activity_description' => $description,
-                ]);                         
+                ]);
             }
         }
 
@@ -52,6 +61,10 @@ class LogActivity
             ],
             'keuangan' => [
                 'index' => 'Mengakses halaman Keuangan',
+            ],
+            'riwayat' => [
+                'index' => 'Mengakses halaman Riwayat',
+                'search' => 'Mencari riwayat',
             ],
         ];
 
