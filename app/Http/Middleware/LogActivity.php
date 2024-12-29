@@ -89,8 +89,8 @@ class LogActivity
         $url = $request->fullUrl();
         $time = now()->toDateTimeString();
 
-        $logEntry = ":User  $userId\n" .
-                    "User  Name: $userName\n" .
+        $logEntry = "User:  $userId\n" .
+                    "User Name: $userName\n" .
                     "Time: $time\n" .
                     "IP: $ipAddress\n" .
                     "URL: $url\n" .
