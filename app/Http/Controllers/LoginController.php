@@ -123,7 +123,7 @@ class LoginController extends Controller
         $ipAddress = $request->ip();
         $url = $request->fullUrl();
         $browser = $request->header('User -Agent'); // Perbaikan di sini
-        $time = now()->toDateTimeString();
+        $time = now();
 
         $logEntry = "User:   $userId\n" .
                     "Time: $time\n" .

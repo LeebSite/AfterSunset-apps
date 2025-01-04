@@ -87,7 +87,7 @@ class LogActivity
         $userName = Auth::user()->name;
         $ipAddress = $request->ip();
         $url = $request->fullUrl();
-        $time = now()->toDateTimeString();
+        $time = now();
 
         $logEntry = "User:  $userId\n" .
                     "User Name: $userName\n" .
