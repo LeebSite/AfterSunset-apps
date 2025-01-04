@@ -11,7 +11,7 @@ class AutoLock
     {
         // Periksa apakah session 'locked' ada
         if (session('locked')) {
-            return redirect()->route('lockscreen'); // Arahkan ke halaman lockscreen jika terkunci
+            return redirect()->route('lockscreen');
         }
 
         $timeout = 100;
