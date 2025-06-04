@@ -35,12 +35,6 @@ Antarmuka modern, responsif, dan ramah pengguna.
 
 ---
 
-## 📸 Cuplikan Tampilan
-
-> (Tambahkan tangkapan layar di sini — contoh: dashboard, halaman transaksi, login, dll.)
-
----
-
 ## 🛠️ Teknologi yang Digunakan
 
 - Laravel 10.x
